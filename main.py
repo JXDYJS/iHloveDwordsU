@@ -1,5 +1,3 @@
-from getpass import getpass
-from getToken import token
 import requests
 import uuid
 import json
@@ -132,15 +130,15 @@ def get_tiku(x_token, ID):
     response = requests.get(getUrl, headers=getHeaders)
     return json.loads(response.text)
 
+
 if __name__ == '__main__':
     with open('new_ku_list.txt', 'r') as f:
         data = f.read()
         data = json.loads(data)
         ku = data
         f.close()
-    username = input('请输入您的学号：')
-    password = getpass('请输入您的密码：')
 
+    myToken = input("请输入Token:")
     mode = input('请输入模式-自测(0)/考试(1)：')
     week = input('请输入第几周(数字)(经测试只能做本周的题目，输入对应周即可)：')
     print("为避免误输入，答题时间在240~480范围外的默认460")
@@ -150,7 +148,6 @@ if __name__ == '__main__':
     score = int(input('请输入你想要的分数(结果可能稍有偏差)：'))
     if score < 0 or score > 100:
         score = 100
-    myToken = token(username, password)
     print(f"脚本将在{answerTime}秒后正式启动，期间请勿关闭脚本")
     paperID = answerPaper(myToken, mode, week, answerTime,score)
     #自测或考试完后顺便更新题库
